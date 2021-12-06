@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css"
+    />
+    <link rel="stylesheet" href="./Assets/css/styles.css" />
+    <title>Weather Dashboard</title>
+  </head>
+
+  <body class="flex-column min-100-vh">
+    <header class="hero">
+      <h1 class="app-title">Weather Dashboard</h1>
+    </header>
+
+    <main class="flex-row justify-space-between">
+      <div class="col-12 col-md-4">
+        <div class="card">
+          <h3 class="card-header text-uppercase">Search for a City:</h3>
+          <form id="city-form" class="card-body">
+            <input
+              name="city-name-input"
+              id="city-name-input"
+              type="text"
+              class="form-input"
+              placeholder="San Francisco"
+            />
+            <button type="submit" class="btn">
+              <i class="fas fa-search"></i> Get Weather
+            </button>
+          </form>
+        </div>
+        <div class="card">
+          <div class="card-body" id="previous-city-buttons">
+            <button data-language="javascript" class="btn">JavaScript</button>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-8">
+        <div class="dashboard container">
+          <h1 class="row"><span id="city-name"></span></h1>
+          <h4 class="row"><span id="temperature"></span></h4>
+          <h4 class="row"><span id="humidity"></span></h4>
+          <h4 class="row"><span id="wind-speed"></span></h4>
+        </div>
+        <div class="forecast-container">
+          <h2 class="subtitle">
+            5 Day Forecast:<span id="city-forecast"></span>
+          </h2>
+        </div>
+        <div class="forecast-days">
+          <div class="forecast-day">day</div>
+          <div class="forecast-day">day</div>
+          <div class="forecast-day">day</div>
+          <div class="forecast-day">day</div>
+          <div class="forecast-day">day</div>
+        </div>
+      </div>
+    </main>
+    <script src="./Assets/js/script.js"></script>
+  </body>
+</html>
