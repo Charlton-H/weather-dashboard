@@ -26,9 +26,9 @@
     </header>
 
     <main class="flex-row justify-space-between">
-      <div class="col-12 col-md-4">
-        <div class="card">
-          <h3 class="card-header text-uppercase">Search for a City:</h3>
+      <div class="col-12 col-md-3">
+        <div class="card search-container">
+          <h4 class="card-header text-uppercase">Search for a City:</h4>
           <form id="city-form" class="card-body">
             <input
               name="city-name-input"
@@ -48,27 +48,35 @@
           </div>
         </div>
       </div>
-      <div class="col-12 col-md-8">
+      <div class="col-12 col-md-9">
         <div class="dashboard container">
-          <h1 class="row"><span id="city-name"></span></h1>
-          <h4 class="row"><span id="temperature"></span></h4>
-          <h4 class="row"><span id="humidity"></span></h4>
-          <h4 class="row"><span id="wind-speed"></span></h4>
+          <h1 class="row">
+            <span id="city-name"></span>
+            <div id="icon"><img id="wicon" src="" alt="" /></div>
+          </h1>
+          <p class="row"><span id="temperature"></span></p>
+          <p class="row"><span id="humidity"></span></p>
+          <p class="row"><span id="wind-speed"></span></p>
         </div>
         <div class="forecast-container">
           <h2 class="subtitle">
             5 Day Forecast:<span id="city-forecast"></span>
           </h2>
-        </div>
-        <div class="forecast-days">
-          <div class="forecast-day">day</div>
-          <div class="forecast-day">day</div>
-          <div class="forecast-day">day</div>
-          <div class="forecast-day">day</div>
-          <div class="forecast-day">day</div>
+          <div class="forecast-days">
+            <div class="forecast-day">day</div>
+            <div class="forecast-day">day</div>
+            <div class="forecast-day">day</div>
+            <div class="forecast-day">day</div>
+            <div class="forecast-day">day</div>
+          </div>
         </div>
       </div>
     </main>
+    <script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+    <script src="https://unpkg.com/dayjs@1.8.21/plugin/advancedFormat.js"></script>
+    <script>
+      dayjs.extend(window.dayjs_plugin_advancedFormat);
+    </script>
     <script src="./Assets/js/script.js"></script>
   </body>
 </html>

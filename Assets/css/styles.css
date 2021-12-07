@@ -78,15 +78,16 @@ main {
 /* CARDS */
 .card {
   margin: 0 0 20px 0;
-  border: 3px solid var(--dark);
-  border-radius: var(--border-radius);
+  /* border: 3px solid var(--dark); */
+  border-style: none;
+  /* border-radius: var(--border-radius); */
 }
 
 .card-header {
   color: var(--primary);
   background-color: var(--secondary);
   padding: 2.5%;
-  border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0;
+  /* border-radius: calc(0.18rem - 1px) calc(0.18rem - 1px) 0 0; */
 }
 
 .card-body {
@@ -114,6 +115,14 @@ main {
   border-radius: var(--border-radius);
 }
 
+#city-form {
+  border-right: solid 2px;
+  border-bottom: solid 2px;
+  border-left: solid 2px;
+  border-bottom-right-radius: calc(0.25rem - 1px) calc(0.25rem - 1px);
+  border-bottom-left-radius: calc(0.25rem - 1px) calc(0.25rem - 1px);
+}
+
 /* FLEX CONTENT */
 .flex-row {
   display: flex;
@@ -128,7 +137,7 @@ main {
 
 /* dashboard */
 .dashboard {
-  /* border-style: solid; */
+  border-style: solid;
   margin: 0px 0px 15px 0px;
 }
 
@@ -147,4 +156,15 @@ main {
   margin: 0px 0px 15px 0px;
   flex: 1;
   flex-direction: column;
+}
+
+#city-name {
+  padding: 23px 0 16px 0;
+}
+
+#temperature,
+#humidity,
+#wind-speed {
+  line-height: 32px;
+  font-size: x-large;
 }
