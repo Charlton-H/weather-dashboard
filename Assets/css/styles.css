@@ -141,30 +141,36 @@ main {
   margin: 0px 0px 15px 0px;
 }
 
+#temperature,
+#humidity,
+#wind-speed {
+  line-height: 32px;
+  font-size: x-large;
+}
+
 .forecast-container {
   border-style: solid;
-  margin: 0px 0px 15px 0px;
+  /* margin: 0px 0px 15px 0px; */
 }
 
 .forecast-days {
+  /* display: flex;
+  flex-direction: column; */
+}
+
+.loaded {
+  border-style: solid;
+  margin: 0px 0px 15px 0px;
   display: flex;
-  flex-wrap: wrap;
 }
 
 .forecast-day {
   border-style: solid;
-  margin: 0px 0px 15px 0px;
+  /* margin: 0px 0px 15px 0px; */
   flex: 1;
   flex-direction: column;
 }
 
 #city-name {
   padding: 23px 0 16px 0;
-}
-
-#temperature,
-#humidity,
-#wind-speed {
-  line-height: 32px;
-  font-size: x-large;
 }

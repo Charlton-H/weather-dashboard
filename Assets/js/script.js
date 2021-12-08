@@ -7,6 +7,7 @@ var displayCityHumidityEl = document.querySelector("#humidity");
 var displayCityWindSpeedEl = document.querySelector("#wind-speed");
 var todaysDate = dayjs().format(`MMM Do, YYYY`);
 // console.log(todaysDate);
+var forecastEl = document.getElementsByClassName("forecast");
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 
@@ -71,22 +72,47 @@ function displayCityWeather(data) {
   ${icon}
   `);
 
-  getCityForecast(city);
+  fetchForecast(data);
 }
 
-function getCityForecast(cityLat, cityLong) {
+function fetchForecast(data) {
+  var cityLong = data.coord.lon;
+  var cityLat = data.coord.lat;
+  console.log(`${cityLat} ; ${cityLong}`);
   var apiKey = "7ee8bad647ef3b941781af45cc24e7a9";
-  var apiURL = `http://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&appid=${apiKey}&units=imperial`;
+  var apiURL = `http://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=imperial`;
 
-  fetch(apiURL).then(function (response) {
-    if (response.ok) {
+  fetch(apiURL)
+    .then(function (response) {
+      if (200 !== response.status) {
+        console.log(
+          "Looks like there was a problem. Status Code: " + response.status
+        );
+        return;
+      }
+
+      forecastEl[0].classList.add("loaded");
+
       response.json().then(function (data) {
-        displayCityForecast(data);
+        var fday = "";
+        data.daily.forEach((value, index) => {
+          if (index > 2) {
+            var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
+              weekday: "long",
+            });
+            var icon = value.weather[0].icon;
+            var temp = value.temp.day.toFixed(0);
+            fday = `<div class="forecast-day">
+						<p>${dayname}</p>
+						<p><span class="ico-${icon}" title="${icon}"></span></p>
+						<div class="forecast-day--temp">${temp}<sup>°F</sup></div>
+					</div>`;
+            forecastEl[0].insertAdjacentHTML("beforeend", fday);
+          }
+        });
       });
-    }
-  });
-}
-
-function displayCityForecast(data) {
-  for (var i = 0; i < data.length; i++) {}
+    })
+    .catch(function (err) {
+      console.log("Fetch Error :-S", err);
+    });
 }
