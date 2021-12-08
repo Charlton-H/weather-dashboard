@@ -150,16 +150,14 @@ main {
 
 .forecast-container {
   border-style: solid;
-  /* margin: 0px 0px 15px 0px; */
+}
+
+.subtitle {
+  margin: 0px 0px 15px 0px;
 }
 
 .forecast-days {
-  /* display: flex;
-  flex-direction: column; */
-}
-
-.loaded {
-  border-style: solid;
+  /* border-style: solid; */
   margin: 0px 0px 15px 0px;
   display: flex;
 }
@@ -169,6 +167,7 @@ main {
   /* margin: 0px 0px 15px 0px; */
   flex: 1;
   flex-direction: column;
+  text-align: center;
 }
 
 #city-name {

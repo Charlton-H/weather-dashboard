@@ -91,22 +91,28 @@ function fetchForecast(data) {
         return;
       }
 
-      forecastEl[0].classList.add("loaded");
+      forecastEl[0].classList.add("forecast-days");
 
       response.json().then(function (data) {
         var fday = "";
         data.daily.forEach((value, index) => {
           if (index > 2) {
-            var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
-              weekday: "long",
-            });
+            // var dayName = new Date(value.dt * 1000).toLocaleDateString("en", {
+            //   weekday: "long",
+            // });
+            var dateNumeric = dayjs().format("MMM Do, YYYY");
             var icon = value.weather[0].icon;
             var temp = value.temp.day.toFixed(0);
+            var humidity = value.humidity;
+            var windSpeed = value.wind_speed;
+            var iconURLStart = "http://openweathermap.org/img/wn/";
+            var iconURLEnd = "@2x.png";
             fday = `<div class="forecast-day">
-						<p>${dayname}</p>
-						<p><span class="ico-${icon}" title="${icon}"></span></p>
-						<div class="forecast-day--temp">${temp}<sup>°F</sup></div>
-					</div>`;
+						<p>${dateNumeric} <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
+						<div class="forecast-day-temp">Temp: ${temp}<sup>°F</sup></div>
+            <div class="forecast-day-humidity">Humidity: ${humidity}</div>
+            <div class="forecast-day-wind-speed">Wind: ${windSpeed}</div>
+            </div>`;
             forecastEl[0].insertAdjacentHTML("beforeend", fday);
           }
         });
