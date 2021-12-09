@@ -9,6 +9,7 @@ var todaysDate = dayjs().format(`MMM Do, YYYY`);
 var substitleEl = document.querySelector(".subtitle");
 // console.log(todaysDate);
 var forecastEl = document.getElementsByClassName("forecast");
+var previousCityEl = document.querySelector("#previous-city-buttons");
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
 
@@ -29,6 +30,20 @@ function formSubmitHandler(event) {
   } else {
     alert("Please enter a City destination");
   }
+}
+
+function createPreviousCityBtn() {
+  // pass cityname from formSubmitHandler into this function
+  // create localStorage obj[key] value
+  // create button element with id="$cityname"
+  // set class = "btn"
+  // create var element with queryselector = "#cityname"
+  // textContent = "${cityname}"
+}
+
+function previousCityOnClick() {
+  // create handler that listens to previous-city-buttons form
+  // on click, take id and insert into formSubmitHandler
 }
 
 function getCityCoordinates(city) {
