@@ -129,16 +129,22 @@ main {
   flex-wrap: wrap;
 }
 
-.flex-column {
+/*.flex-column {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-}
+} */
 
 /* dashboard */
 .dashboard {
-  border-style: solid;
+  /* border-style: solid; */
   margin: 0px 0px 15px 0px;
+  min-height: 200px;
+}
+
+.row {
+  /* margin: 0 5px; */
+  padding: 2px 2px;
 }
 
 #temperature,
@@ -148,9 +154,9 @@ main {
   font-size: x-large;
 }
 
-.forecast-container {
+/* .forecast-container {
   border-style: solid;
-}
+} */
 
 .subtitle {
   margin: 0px 0px 15px 0px;
@@ -168,6 +174,9 @@ main {
   flex: 1;
   flex-direction: column;
   text-align: center;
+  background-color: var(--secondary);
+  color: var(--primary);
+  border-radius: 10px;
 }
 
 #city-name {

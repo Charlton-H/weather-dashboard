@@ -6,16 +6,21 @@ var displayCityTemperatureEl = document.querySelector("#temperature");
 var displayCityHumidityEl = document.querySelector("#humidity");
 var displayCityWindSpeedEl = document.querySelector("#wind-speed");
 var todaysDate = dayjs().format(`MMM Do, YYYY`);
+var substitleEl = document.querySelector(".subtitle");
 // console.log(todaysDate);
 var forecastEl = document.getElementsByClassName("forecast");
 
 cityFormEl.addEventListener("submit", formSubmitHandler);
+
+var apiKey = "7ee8bad647ef3b941781af45cc24e7a9";
 
 function formSubmitHandler(event) {
   event.preventDefault();
 
   var cityname = cityInputEl.value.trim();
   // console.log(cityname);
+
+  clearWeatherContents();
 
   if (cityname) {
     getCityCoordinates(cityname);
@@ -27,7 +32,6 @@ function formSubmitHandler(event) {
 }
 
 function getCityCoordinates(city) {
-  var apiKey = "7ee8bad647ef3b941781af45cc24e7a9";
   var apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
   fetch(apiURL)
@@ -79,8 +83,9 @@ function fetchForecast(data) {
   var cityLong = data.coord.lon;
   var cityLat = data.coord.lat;
   console.log(`${cityLat} ; ${cityLong}`);
-  var apiKey = "7ee8bad647ef3b941781af45cc24e7a9";
   var apiURL = `http://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=imperial`;
+
+  substitleEl.textContent = "5 Day Forecast:";
 
   fetch(apiURL)
     .then(function (response) {
@@ -97,10 +102,7 @@ function fetchForecast(data) {
         var fday = "";
         data.daily.forEach((value, index) => {
           if (index > 2) {
-            // var dayName = new Date(value.dt * 1000).toLocaleDateString("en", {
-            //   weekday: "long",
-            // });
-            var dateNumeric = dayjs().format("MMM Do, YYYY");
+            var forecastDate = dayjs().format("MMM Do, YYYY");
             var icon = value.weather[0].icon;
             var temp = value.temp.day.toFixed(0);
             var humidity = value.humidity;
@@ -108,7 +110,7 @@ function fetchForecast(data) {
             var iconURLStart = "http://openweathermap.org/img/wn/";
             var iconURLEnd = "@2x.png";
             fday = `<div class="forecast-day">
-						<p>${dateNumeric} <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
+						<p>${forecastDate} <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
 						<div class="forecast-day-temp">Temp: ${temp}<sup>°F</sup></div>
             <div class="forecast-day-humidity">Humidity: ${humidity}</div>
             <div class="forecast-day-wind-speed">Wind: ${windSpeed}</div>
@@ -121,4 +123,24 @@ function fetchForecast(data) {
     .catch(function (err) {
       console.log("Fetch Error :-S", err);
     });
+}
+
+function clearWeatherContents() {
+  displayCityEl.textContent = "";
+  weatherIconEl.innerHTML = "";
+  weatherIconEl.setAttribute("src", "");
+  displayCityTemperatureEl.textContent = "";
+  displayCityHumidityEl.textContent = "";
+  displayCityWindSpeedEl.textContent = "";
+
+  substitleEl.textContent = "";
+
+  var forecastElIndex = forecastEl[0];
+
+  if (forecastElIndex.hasChildNodes()) {
+    // console.log("true");
+    while (forecastElIndex.firstChild) {
+      forecastElIndex.removeChild(forecastElIndex.lastChild);
+    }
+  }
 }

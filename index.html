@@ -20,7 +20,7 @@
     <title>Weather Dashboard</title>
   </head>
 
-  <body class="flex-column min-100-vh">
+  <body>
     <header class="hero">
       <h1 class="app-title">Weather Dashboard</h1>
     </header>
@@ -54,13 +54,13 @@
             <span id="city-name"></span>
             <div id="icon"><img id="wicon" src="" alt="" /></div>
           </h1>
-          <p class="row"><span id="temperature"></span></p>
-          <p class="row"><span id="humidity"></span></p>
-          <p class="row"><span id="wind-speed"></span></p>
+          <p class="row" id="temperature"></p>
+          <p class="row" id="humidity"></p>
+          <p class="row" id="wind-speed"></p>
         </div>
-        <div class="forecast-container container-fluid">
+        <div class="forecast-container">
           <h2 class="subtitle">
-            5 Day Forecast:<span id="city-forecast"></span>
+            <span id="city-forecast"></span>
           </h2>
           <div class="forecast"></div>
         </div>
