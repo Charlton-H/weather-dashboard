@@ -5,6 +5,7 @@ var weatherIconEl = document.querySelector("#wicon");
 var displayCityTemperatureEl = document.querySelector("#temperature");
 var displayCityHumidityEl = document.querySelector("#humidity");
 var displayCityWindSpeedEl = document.querySelector("#wind-speed");
+// var displayCityUVIndexEl = document.querySelector("#uv");
 var todaysDate = dayjs().format(`MMM Do, YYYY`);
 var substitleEl = document.querySelector(".subtitle");
 // console.log(todaysDate);
@@ -32,13 +33,17 @@ function formSubmitHandler(event) {
   }
 }
 
-function createPreviousCityBtn() {
+function createPreviousCityBtn(cityName) {
+  var city = cityName.toUpperCase();
   // pass cityname from formSubmitHandler into this function
+  var btn = document.createElement("button");
+  // create button element with id="$cityname", class="btn", textContent="${city}"
+  btn.setAttribute("id", `${city}`);
+  btn.classList.add("btn");
+  btn.textContent = `${city}`;
+  previousCityEl.appendChild(btn);
+
   // create localStorage obj[key] value
-  // create button element with id="$cityname"
-  // set class = "btn"
-  // create var element with queryselector = "#cityname"
-  // textContent = "${cityname}"
 }
 
 function previousCityOnClick() {
@@ -54,6 +59,7 @@ function getCityCoordinates(city) {
       if (response.ok) {
         response.json().then(function (data) {
           displayCityWeather(data);
+          createPreviousCityBtn(city);
         });
       } else {
         alert("Error: City Not Found");
@@ -71,6 +77,7 @@ function displayCityWeather(data) {
   var cityCurrentHumidity = data.main.humidity;
   var cityCurrentTemp = data.main.temp;
   var cityCurrentWindSpeed = data.wind.speed;
+  var cityUVIndex = data.uvi;
   var icon = JSON.stringify(data.weather[0].icon);
   icon = icon.replace('"', "");
   icon = icon.replace('"', "");
@@ -81,7 +88,7 @@ function displayCityWeather(data) {
   displayCityTemperatureEl.textContent = `Temp: ${cityCurrentTemp} °F`;
   displayCityHumidityEl.textContent = `Humidity: ${cityCurrentHumidity} %`;
   displayCityWindSpeedEl.textContent = `Wind Speed: ${cityCurrentWindSpeed} MPH`;
-
+  // displayCityUVIndexEl.textContent = `UV Index: ${cityUVIndex}`;
   console.log(`${city}
   ${cityLong}
   ${cityLat}
@@ -116,8 +123,11 @@ function fetchForecast(data) {
       response.json().then(function (data) {
         var fday = "";
         data.daily.forEach((value, index) => {
-          if (index > 2) {
-            var forecastDate = dayjs().format("MMM Do, YYYY");
+          if (index > 0 && index < 6) {
+            // var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
+            //   weekday: "long",
+            // });
+            var forecastDate = dayjs(value.dt * 1000).format("ddd, MMM Do");
             var icon = value.weather[0].icon;
             var temp = value.temp.day.toFixed(0);
             var humidity = value.humidity;
@@ -125,7 +135,7 @@ function fetchForecast(data) {
             var iconURLStart = "http://openweathermap.org/img/wn/";
             var iconURLEnd = "@2x.png";
             fday = `<div class="forecast-day">
-						<p>${forecastDate} <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
+						<p>${forecastDate}</p><p> <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
 						<div class="forecast-day-temp">Temp: ${temp}<sup>°F</sup></div>
             <div class="forecast-day-humidity">Humidity: ${humidity}</div>
             <div class="forecast-day-wind-speed">Wind: ${windSpeed}</div>

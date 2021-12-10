@@ -182,3 +182,8 @@ main {
 #city-name {
   padding: 23px 0 16px 0;
 }
+
+p {
+  margin: 0;
+  line-height: 3;
+}
