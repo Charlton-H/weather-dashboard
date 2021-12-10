@@ -52,7 +52,7 @@ function previousCityOnClick() {
 }
 
 function getCityCoordinates(city) {
-  var apiURL = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
+  var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
   fetch(apiURL)
     .then(function (response) {
@@ -81,7 +81,7 @@ function displayCityWeather(data) {
   var icon = JSON.stringify(data.weather[0].icon);
   icon = icon.replace('"', "");
   icon = icon.replace('"', "");
-  var weatherIconURL = "http://openweathermap.org/img/wn/" + icon + "@2x.png";
+  var weatherIconURL = "https://openweathermap.org/img/wn/" + icon + "@2x.png";
 
   displayCityEl.textContent = `${city} (${todaysDate})`;
   weatherIconEl.setAttribute("src", weatherIconURL);
@@ -105,7 +105,7 @@ function fetchForecast(data) {
   var cityLong = data.coord.lon;
   var cityLat = data.coord.lat;
   console.log(`${cityLat} ; ${cityLong}`);
-  var apiURL = `http://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=imperial`;
+  var apiURL = `https://api.openweathermap.org/data/2.5/onecall?lat=${cityLat}&lon=${cityLong}&exclude=current,hourly,minutely,alerts&appid=${apiKey}&units=imperial`;
 
   substitleEl.textContent = "5 Day Forecast:";
 
@@ -132,7 +132,7 @@ function fetchForecast(data) {
             var temp = value.temp.day.toFixed(0);
             var humidity = value.humidity;
             var windSpeed = value.wind_speed;
-            var iconURLStart = "http://openweathermap.org/img/wn/";
+            var iconURLStart = "https://openweathermap.org/img/wn/";
             var iconURLEnd = "@2x.png";
             fday = `<div class="forecast-day">
 						<p>${forecastDate}</p><p> <span class="ico-${icon}" title="${icon}"><img src="${iconURLStart}${icon}${iconURLEnd}" style="width:50px"/></span></p>
