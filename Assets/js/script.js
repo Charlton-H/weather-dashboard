@@ -148,9 +148,6 @@ function fetchForecast(data) {
         var fday = "";
         data.daily.forEach((value, index) => {
           if (index > 0 && index < 6) {
-            // var dayname = new Date(value.dt * 1000).toLocaleDateString("en", {
-            //   weekday: "long",
-            // });
             var forecastDate = dayjs(value.dt * 1000).format("ddd, MMM Do");
             var icon = value.weather[0].icon;
             var temp = value.temp.day.toFixed(0);
