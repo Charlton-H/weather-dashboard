@@ -8,69 +8,93 @@ var displayCityWindSpeedEl = document.querySelector("#wind-speed");
 // var displayCityUVIndexEl = document.querySelector("#uv");
 var todaysDate = dayjs().format(`MMM Do, YYYY`);
 var substitleEl = document.querySelector(".subtitle");
-// console.log(todaysDate);
 var forecastEl = document.getElementsByClassName("forecast");
 var previousCityEl = document.querySelector("#previous-city-buttons");
 
-cityFormEl.addEventListener("submit", formSubmitHandler);
-
+var previousCitiesObj = {};
 var apiKey = "7ee8bad647ef3b941781af45cc24e7a9";
 
-function formSubmitHandler(event) {
-  event.preventDefault();
+// on DOM load ....
+$(document).ready(function () {
+  // execute loadPastCities function
+  loadPastCities();
 
-  var cityname = cityInputEl.value.trim();
-  // console.log(cityname);
+  function loadPastCities() {
+    previousCitiesObj = JSON.parse(localStorage.getItem("city")) || {};
 
-  clearWeatherContents();
+    $.each(previousCitiesObj, function (city) {
+      createPreviousCityBtn(city);
+    });
+  }
 
-  if (cityname) {
-    getCityCoordinates(cityname);
-    console.log(cityname);
-    cityInputEl.value = "";
-  } else {
-    alert("Please enter a City destination");
+  // execute if "Get Weather" submission
+  $("#city-form").on("submit", function (event) {
+    event.preventDefault();
+
+    var cityname = cityInputEl.value.trim();
+    // console.log(cityname);
+
+    // clearWeatherContents();
+
+    if (cityname) {
+      getCityCoordinates(cityname, true);
+      console.log(cityname);
+      cityInputEl.value = "";
+    } else {
+      alert("Please enter a City destination");
+    }
+  });
+
+  // execute if Past City Btn clicked on
+  $(".pastCityBtn").on("click", function (event) {
+    // create handler that listens to previous-city-buttons form
+    // on click, take id and insert into formSubmitHandler
+    var pastCityName = $(this).attr("id");
+    getCityCoordinates(pastCityName, false);
+  });
+});
+
+function createPreviousCityBtn(cityName) {
+  if (localStorage.getItem(cityName) === null) {
+    var city = cityName.toUpperCase();
+    // pass cityname from formSubmitHandler into this function
+    var btn = document.createElement("button");
+    // create button element with id="$cityname", class="btn", textContent="${city}"
+    btn.setAttribute("id", `${city}`);
+    btn.classList.add("pastCityBtn");
+    btn.textContent = `${city}`;
+    previousCityEl.appendChild(btn);
+
+    // create localStorage obj[key] value
+
+    previousCitiesObj[city] = city;
+    localStorage.setItem("city", JSON.stringify(previousCitiesObj));
   }
 }
 
-function createPreviousCityBtn(cityName) {
-  var city = cityName.toUpperCase();
-  // pass cityname from formSubmitHandler into this function
-  var btn = document.createElement("button");
-  // create button element with id="$cityname", class="btn", textContent="${city}"
-  btn.setAttribute("id", `${city}`);
-  btn.classList.add("btn");
-  btn.textContent = `${city}`;
-  previousCityEl.appendChild(btn);
-
-  // create localStorage obj[key] value
-}
-
-function previousCityOnClick() {
-  // create handler that listens to previous-city-buttons form
-  // on click, take id and insert into formSubmitHandler
-}
-
-function getCityCoordinates(city) {
+function getCityCoordinates(city, button) {
   var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=imperial`;
 
   fetch(apiURL)
     .then(function (response) {
-      if (response.ok) {
-        response.json().then(function (data) {
-          displayCityWeather(data);
+      // if (response) {
+      response.json().then(function (data) {
+        displayCityWeather(data);
+        if (button) {
           createPreviousCityBtn(city);
-        });
-      } else {
-        alert("Error: City Not Found");
-      }
+        }
+      });
+      // } else {
+      //   alert("Error: City Not Found");
+      // }
     })
-    .catch(function (error) {
+    .catch(function (data) {
       alert("Unable to connect to OpenWeather");
     });
 }
 
 function displayCityWeather(data) {
+  clearWeatherContents();
   var city = data.name;
   var cityLong = data.coord.lon;
   var cityLat = data.coord.lat;
